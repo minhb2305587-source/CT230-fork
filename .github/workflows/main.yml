@@ -1,20 +1,21 @@
 name: ci
-# Pipeline tối thiểu cho bài thực hành: mọi push/PR phải chạy xanh ./mvnw -B verify
+
 on:
   push:
     branches: [ main ]
   pull_request:
+    branches: [ main ]
+
 jobs:
   verify:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-java@v6
+      - uses: actions/checkout@v4
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
         with:
-          distribution: temurin
           java-version: '21'
-          cache: maven
+          distribution: 'temurin'
       - name: Build và kiểm thử (gồm Testcontainers nếu có)
         run: |
           cd THBuoi02
